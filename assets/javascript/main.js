@@ -44,7 +44,7 @@ window.onload = function () {
                     //checks if timers is at 0.01 to tell user that they failed
                     if (seconds === 0){
                     
-                        alert("Sorry, time is up!");
+                        alert("Sorry, time is up! Press OK to reset");
                         
                     } 
                 }
@@ -195,4 +195,6 @@ window.onload = function () {
         initializeQuestion();
     }
 }
+
+
 
