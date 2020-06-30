@@ -4,6 +4,7 @@ window.onload = function () {
    
     
     var startButton = document.querySelector("#start-button");
+    var resetButton = document.querySelector("#start-button");
     
   
 
@@ -18,16 +19,16 @@ window.onload = function () {
 
 // calls other functions to start quiz and timer. Used to reset 
     function caller() {
-        startTimer(5);
+        startTimer(5,60);
         quizstarter();
 
     }
 
 //Timer functions
-    function startTimer(minutes) {
-        var seconds = 60;
+    function startTimer(minutes,seconds) {
+        var seconds = seconds;
         var mins = minutes;
-
+        var nature = false;
         function tick() {
 
             var counter = document.getElementById("counter");
@@ -40,9 +41,10 @@ window.onload = function () {
             } else {
                 if (mins > 1) {
                     startTimer(mins - 1);
+                    nature = true;
                 }else{
                     //checks if timers is at 0.01 to tell user that they failed
-                    if (seconds === 0){
+                    if (seconds === 0 && nature === true){
                     
                         alert("Sorry, time is up! Press OK to reset");
                         
@@ -63,6 +65,9 @@ window.onload = function () {
 
 
     function quizstarter() {
+        
+    
+        
         var questionList = [
             {
                 "question": "When there is an array included in Javascript, you'll most likely include:",
@@ -118,8 +123,20 @@ window.onload = function () {
                 "correct": "d",
                 "userAnswer": null
             },
+            {
+                "question": "",
+                "a": "",
+                "b": "",
+                "c": "",
+                "d": "",
+                "correct": null,
+                "userAnswer": null
+            },
+        
+        
+        
         ];
-
+        
         var questionTag = document.body.querySelector("#question");
         var answerTagA = document.body.querySelector("#answer-a");
         var answerTagB = document.body.querySelector("#answer-b");
@@ -139,12 +156,17 @@ window.onload = function () {
             var button = event.target;
             var userAnswer = button.getAttribute("data-answer");
             var questionId = parseInt(button.getAttribute("data-question"));
-            console.log(button);
-            console.log(userAnswer);
-            console.log(questionId);
+            //console.log(button);
+           // console.log(userAnswer);
+            //console.log(questionId);
             questionList[questionId]["userAnswer"] = userAnswer;
 
-           
+            if(questionIndex >= 5){
+                var counter = document.getElementById("counter");
+                counter.innerHTML = "HELLO";
+                alert("hi");
+                questionIndex =-1;
+            }
             
 
 
@@ -156,7 +178,7 @@ window.onload = function () {
                     document.getElementById('Total').innerHTML = Total;
                     initializeQuestion();
                     score.textContent = "";
-                }, 5000);
+                }, 1000);
             }
             else {
                 score.textContent = "You got it wrong";
@@ -164,12 +186,12 @@ window.onload = function () {
                     questionIndex++;
                     initializeQuestion();
                     score.textContent = "";
-                }, 5000);
+                }, 1000);
             }
             document.getElementById('Total').innerHTML = Total;
         
         }
-
+        
         buttonA.addEventListener("click", buttonHandler);
         buttonB.addEventListener("click", buttonHandler);
         buttonC.addEventListener("click", buttonHandler);
@@ -191,8 +213,11 @@ window.onload = function () {
             buttonB.setAttribute("data-question", questionIndex);
             buttonC.setAttribute("data-question", questionIndex);
             buttonD.setAttribute("data-question", questionIndex);
+            console.log(questionIndex);
         }
         initializeQuestion();
+       
+          
     }
 }
 
